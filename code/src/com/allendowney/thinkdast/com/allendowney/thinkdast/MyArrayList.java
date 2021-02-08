@@ -1,5 +1,6 @@
 package com.allendowney.thinkdast;
 
+import java.io.ObjectStreamException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,7 +46,15 @@ public class MyArrayList<T> implements List<T> {
 	@Override
 	public boolean add(T element) {
 		// TODO: FILL THIS IN!
-		return false;
+		if(size >= array.length){
+			//to make a bigger array if there is not enough space.
+			T[] bigger = (T[]) new Object[array.length * 2];
+			System.arraycopy(array, 0, bigger, 0, array.length);
+			array = bigger;
+		}
+		array[size] = element;
+		size++;
+		return true;
 	}
 
 	@Override
@@ -119,7 +128,7 @@ public class MyArrayList<T> implements List<T> {
 	 * Handles the special case that the target is null.
 	 *
 	 * @param target
-	 * @param object
+	 * @param element
 	 */
 	private boolean equals(Object target, Object element) {
 		if (target == null) {
